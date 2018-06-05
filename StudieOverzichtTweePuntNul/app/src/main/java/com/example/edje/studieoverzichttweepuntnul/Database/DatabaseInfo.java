@@ -12,5 +12,6 @@ public class DatabaseInfo {
         public static final String CODE = "code";	// FINAL !
         public static final String GRADE = "grade";
         public static final String PERIOD = "period";//
+        public static final String STUDIEJAAR = "studiejaar";//
     }
 }

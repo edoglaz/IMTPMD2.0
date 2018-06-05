@@ -7,18 +7,20 @@ import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.
 
 public class CourseModel {
 
-    private String vakCode;
-    private int aantalECTS;
-    private int cijfer;
-    private int periode;
-    private String naam;
+    public String vakCode;
+    public int aantalECTS;
+    public double cijfer;
+    public int periode;
+    public String naam;
+    public int studiejaar;
 
-    public CourseModel(String vc, String n, int ae, int c, int p) {
+    public CourseModel(String vc, String n, int ae, double c, int p) {
         this.vakCode = vc;
         this.naam = n;
         this.aantalECTS = ae;
         this.cijfer = c;
         this.periode = p;
+        //this.studiejaar = sj;
 
 
     }
@@ -40,6 +42,10 @@ public class CourseModel {
     }
 
     public String getCode(){
+        return String.valueOf(vakCode);
+    }
+
+    public String getStudiejaar(){
         return String.valueOf(vakCode);
     }
 
