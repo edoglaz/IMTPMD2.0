@@ -1,5 +1,6 @@
 package com.example.edje.studieoverzichttweepuntnul;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,10 +9,14 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -37,63 +42,52 @@ public class MainActivity extends AppCompatActivity {
     String TAG_GRADE = "grade";
     String TAG_PERIOD = "period";
     String TAG_STUDIEJAAR = "studiejaar";
-
+    Toolbar toolbar;
+    ListView listView;
+    ActionBar actionBar;
+    String grafisch;
     //private static String TAG = MainActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button button = (Button) this.findViewById(R.id.button);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getResources().getString(R.string.app_name));
+        listView = (ListView)findViewById(R.id.listView);
 
-        maakDatabase();
 
-        button.setOnClickListener(new View.OnClickListener() {
+
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.studiejaren));
+        grafisch = getResources().getStringArray(R.array.studiejaren)[4];
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
                 Intent intent = new Intent(MainActivity.this, CourseListActivity.class);
+                intent.putExtra("StudieJaar",listView.getItemAtPosition(i).toString());
                 startActivity(intent);
+
+ /*
+                if(grafisch.equals(listView.getItemAtPosition(i).toString())){
+                    Intent intent2 = new Intent(MainActivity.this, ChartActivity.class);
+                    startActivity(intent2);
+                }
+                /*
+
+                 */
+
             }
         });
-        DatabaseHelper dbHelper = DatabaseHelper.getHelper(this);
+        listView.setAdapter(mAdapter);
+
+        maakDatabase();
+        CheckDatabase();
 
 
-        /*
-        ContentValues values = new ContentValues();
-
-        values.put(DatabaseInfo.CourseColumn.NAME, "Inf Keuze Programming Mobile Devices");
-        values.put(DatabaseInfo.CourseColumn.ECTS, "3");
-        values.put(DatabaseInfo.CourseColumn.CODE, "IKPMD");
-        values.put(DatabaseInfo.CourseColumn.GRADE, "5.5");
-        values.put(DatabaseInfo.CourseColumn.PERIOD, "1");
-
-        values.put(DatabaseInfo.CourseColumn.NAME, "Test");
-        values.put(DatabaseInfo.CourseColumn.ECTS, "6");
-        values.put(DatabaseInfo.CourseColumn.CODE, "dik");
-        values.put(DatabaseInfo.CourseColumn.GRADE, "6.5");
-        values.put(DatabaseInfo.CourseColumn.PERIOD, "2");
 
 
-// INSERT dit values object in DE (ZELFGEMAAKTE) RIJ COURSE,
-        dbHelper.insert(DatabaseInfo.CourseTables.COURSE, null, values);
-
-        Cursor rs = dbHelper.query(DatabaseInfo.CourseTables.COURSE, new String[]{"*"}, null, null, null, null, null);
-
-        rs.moveToFirst();   // Skip : de lege elementen vooraan de rij.
-// Maar : de rij kan nog steeds leeg zijn
-// Hoe : lossen we dit op ??
-
-// Haalt de name uit de resultset
-        String name = (String) rs.getString(rs.getColumnIndex("ects"));
-
-// Even checken of dit goed binnen komt
-        Toast.makeText(getApplicationContext(), name,
-                Toast.LENGTH_LONG).show();
-        /*
-
-         /*
-
-          */
     }
     public boolean isInternetAvailable() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
