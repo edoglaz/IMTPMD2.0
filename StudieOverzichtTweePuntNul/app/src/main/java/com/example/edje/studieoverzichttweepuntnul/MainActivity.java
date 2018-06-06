@@ -150,10 +150,10 @@ public class MainActivity extends AppCompatActivity {
 
                                 String holdects = methode.getString(TAG_ECTS);
                                 String holdperiod = methode.getString(TAG_PERIOD);
-                                //String holdstudiejaar = methode.getString(TAG_STUDIEJAAR);
-                                //String code = methode.getString(TAG_CODE);
+                                String holdstudiejaar = methode.getString(TAG_STUDIEJAAR);
+                                String code = methode.getString(TAG_CODE);
 
-                               // int studiejaar = Integer.parseInt(holdstudiejaar);
+                               int studiejaar = Integer.parseInt(holdstudiejaar);
                                 int ects = Integer.parseInt(holdects);
                                 //cijfer wordt standaard 0. niet ingevuld.
                                 double grade = 0.0;
@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
                                 values.put(DatabaseInfo.CourseColumn.ECTS, ects);
                                 values.put(DatabaseInfo.CourseColumn.GRADE, grade);
                                 values.put(DatabaseInfo.CourseColumn.PERIOD, period);
-                                //values.put(DatabaseInfo.CourseColumn.CODE, code);
-                                //values.put(DatabaseInfo.CourseColumn.STUDIEJAAR, studiejaar);
+                                values.put(DatabaseInfo.CourseColumn.CODE, code);
+                                values.put(DatabaseInfo.CourseColumn.STUDIEJAAR, studiejaar);
                                 dbHelper.insert(DatabaseInfo.CourseTables.COURSE, null, values);
 
                             }

@@ -44,7 +44,7 @@ public class CourseListAdapter extends ArrayAdapter<CourseModel> {
         vh.GRADE.setText("Cijfer:"+(CharSequence) cm.getGrade());
         vh.PERIOD.setText("Periode:"+(CharSequence) cm.getPeriod());
         vh.CODE.setText("Course code:"+(CharSequence) cm.getCode());
-        vh.STUDIEJAAR.setText("Course code:"+(CharSequence) cm.getStudiejaar());
+        vh.STUDIEJAAR.setText("Studiejaar:"+(CharSequence) cm.getStudiejaar());
         return convertView;
     }
 

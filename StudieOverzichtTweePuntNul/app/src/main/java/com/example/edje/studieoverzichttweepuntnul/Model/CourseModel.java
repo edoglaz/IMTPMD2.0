@@ -14,13 +14,13 @@ public class CourseModel {
     public String naam;
     public int studiejaar;
 
-    public CourseModel(String vc, String n, int ae, double c, int p) {
+    public CourseModel(String vc, String n, int ae, double c, int p, int sj) {
         this.vakCode = vc;
         this.naam = n;
         this.aantalECTS = ae;
         this.cijfer = c;
         this.periode = p;
-        //this.studiejaar = sj;
+        this.studiejaar = sj;
 
 
     }
@@ -46,7 +46,7 @@ public class CourseModel {
     }
 
     public String getStudiejaar(){
-        return String.valueOf(vakCode);
+        return String.valueOf(studiejaar);
     }
 
     public void setGrade(String name) {
