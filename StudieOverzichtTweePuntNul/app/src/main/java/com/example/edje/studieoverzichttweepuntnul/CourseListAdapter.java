@@ -35,9 +35,11 @@ public class CourseListAdapter extends ArrayAdapter<CourseModel> {
             vh.CODE = (TextView) convertView.findViewById(R.id.subject_code);
             vh.STUDIEJAAR = (TextView) convertView.findViewById(R.id.subject_studiejaar);
             convertView.setTag(vh);
+
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
+
         CourseModel cm = getItem(position);
         vh.NAME.setText("Vak:"+(CharSequence) cm.getName());
         vh.ECTS.setText("Aantal Ects:"+(CharSequence) cm.getEcts());

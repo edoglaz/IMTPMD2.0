@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     ActionBar actionBar;
     String grafisch;
     //private static String TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         });
         listView.setAdapter(mAdapter);
 
-        maakDatabase();
+
         CheckDatabase();
 
 
@@ -175,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
-                       // hidepDialog();
+                        //hidepDialog();
 
                     }
                 }, new Response.ErrorListener() {
@@ -191,9 +192,9 @@ public class MainActivity extends AppCompatActivity {
         JSONcontroller.getInstance().addToRequestQueue(req);
 
     }
+
+
 /*
-
-
     private void showpDialog() {
         if (!pDialog.isShowing())
             pDialog.show();

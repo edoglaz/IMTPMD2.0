@@ -1,11 +1,17 @@
 package com.example.edje.studieoverzichttweepuntnul;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.edje.studieoverzichttweepuntnul.Database.DatabaseHelper;
@@ -13,13 +19,9 @@ import com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo;
 import com.example.edje.studieoverzichttweepuntnul.Model.CourseModel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.CODE;
-import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.ECTS;
-import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.GRADE;
-import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.NAME;
-import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.PERIOD;
 import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.STUDIEJAAR;
 
 public class CourseListActivity extends AppCompatActivity {
@@ -38,12 +40,39 @@ public class CourseListActivity extends AppCompatActivity {
     String studiejaar2;
     Toolbar toolbar;
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId()==R.id.my_list_view) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_list, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()) {
+            case R.id.cijferaanpassen:
+                // add stuff here
+                return true;
+            case R.id.notitietoevoegen:
+                // edit stuff here
+                return true;
+            case R.id.notitiebekijken:
+                // remove stuff here
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_list);
         mListView = (ListView) findViewById(R.id.my_list_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         DatabaseHelper dbHelper = DatabaseHelper.getHelper(this);
+        registerForContextMenu(mListView);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
@@ -68,8 +97,23 @@ public class CourseListActivity extends AppCompatActivity {
 
         }
 
+      /*  mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+
+
+
+            }
+
+        });
+        /*
+
+         */
 
     }
+
+
 
     public void ShowDataStudieJaar1()
         {
@@ -108,8 +152,13 @@ public class CourseListActivity extends AppCompatActivity {
 
                 }
                 //zet listview items etc nadat het geladen is uit de e database
+                HashSet<String> hashSet = new HashSet<String>();
+
+
                 mListView = (ListView) findViewById(R.id.my_list_view);
+
                 mAdapter = new CourseListAdapter(CourseListActivity.this, 0, courseModels);
+
                 mListView.setAdapter(mAdapter);
 
             }
@@ -160,4 +209,6 @@ public class CourseListActivity extends AppCompatActivity {
         }
 
     }
+
+
 }
