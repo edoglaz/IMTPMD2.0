@@ -38,20 +38,33 @@ public class CourseListActivity extends AppCompatActivity {
     String TAG_STUDIEJAAR = "studiejaar";
     String studiejaar1;
     String studiejaar2;
+    String studiejaar3;
+    String studiejaar4;
     Toolbar toolbar;
+
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId()==R.id.my_list_view) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.menu_list, menu);
-        }
+        menu.add("Click here");
+        //if (v.getId()==R.id.my_list_view) {
+         //   MenuInflater inflater = getMenuInflater();
+           // inflater.inflate(R.menu.menu_list, menu);
+        //}
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch(item.getItemId()) {
+        super.onContextItemSelected(item);
+
+        if(item.getTitle() == "Click here")
+        {
+            Toast.makeText(this,"Hello", Toast.LENGTH_LONG).show();
+        }
+        return true;
+
+        /*switch(item.getItemId()) {
             case R.id.cijferaanpassen:
                 // add stuff here
                 return true;
@@ -64,6 +77,9 @@ public class CourseListActivity extends AppCompatActivity {
             default:
                 return super.onContextItemSelected(item);
         }
+        /*
+
+         */
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +110,22 @@ public class CourseListActivity extends AppCompatActivity {
         {
 
             ShowDataStudieJaar2();
+
+        }
+
+        studiejaar3 = getResources().getStringArray(R.array.studiejaren)[2];
+        if (toolbar.getTitle().equals(studiejaar3))
+        {
+
+            ShowDataStudieJaar3();
+
+        }
+
+        studiejaar4 = getResources().getStringArray(R.array.studiejaren)[3];
+        if (toolbar.getTitle().equals(studiejaar4))
+        {
+
+            ShowDataStudieJaar4();
 
         }
 
@@ -174,6 +206,96 @@ public class CourseListActivity extends AppCompatActivity {
         String order = DatabaseInfo.CourseColumn.PERIOD + " ASC";
         //String order = PERIOD + ", " ;
         Cursor rs = dbHelper.query(DatabaseInfo.CourseTables.COURSE + " WHERE " + TAG_STUDIEJAAR + "='" + stj2 + "'", projection,null,null,null,null,order);
+
+        //Cursor rs = dbHelper.query(DatabaseInfo.CourseTables.COURSE, projection, null, null, null, null, order);
+        //skip lege elementen die misschien eerst staan.
+        rs.moveToFirst();
+        if (rs.getCount() == 0) {
+            Toast.makeText(this,
+                    "geen database beschikbaar",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            //gooi  het in een loop en lees ze stuk voor stk uit
+            for (int a = 0; a < rs.getCount(); a++) {
+
+                String code = (String) rs.getString(rs.getColumnIndex(TAG_CODE));
+                String naam = (String) rs.getString(rs.getColumnIndex(TAG_VAK));
+                int ects = (Integer) rs.getInt(rs.getColumnIndex(TAG_ECTS));
+                double grade = (Double) rs.getDouble(rs.getColumnIndex(TAG_GRADE));
+                int period = (Integer) rs.getInt(rs.getColumnIndex(TAG_PERIOD));
+                int studiejaar = (Integer) rs.getInt(rs.getColumnIndex(TAG_STUDIEJAAR));
+
+                //add opgehaalde data in de model
+
+                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar));
+
+                //ga naar de volgende in de rij.
+                rs.moveToNext();
+
+            }
+            //zet listview items etc nadat het geladen is uit de e database
+            mListView = (ListView) findViewById(R.id.my_list_view);
+            mAdapter = new CourseListAdapter(CourseListActivity.this, 0, courseModels);
+            mListView.setAdapter(mAdapter);
+
+        }
+
+    }
+
+    public void ShowDataStudieJaar3()
+    {
+
+        DatabaseHelper dbHelper = DatabaseHelper.getHelper(this);
+        //sortorder op periode
+        String stj3 = "3";
+        String order = DatabaseInfo.CourseColumn.PERIOD + " ASC";
+        //String order = PERIOD + ", " ;
+        Cursor rs = dbHelper.query(DatabaseInfo.CourseTables.COURSE + " WHERE " + TAG_STUDIEJAAR + "='" + stj3 + "'", projection,null,null,null,null,order);
+
+        //Cursor rs = dbHelper.query(DatabaseInfo.CourseTables.COURSE, projection, null, null, null, null, order);
+        //skip lege elementen die misschien eerst staan.
+        rs.moveToFirst();
+        if (rs.getCount() == 0) {
+            Toast.makeText(this,
+                    "geen database beschikbaar",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            //gooi  het in een loop en lees ze stuk voor stk uit
+            for (int a = 0; a < rs.getCount(); a++) {
+
+                String code = (String) rs.getString(rs.getColumnIndex(TAG_CODE));
+                String naam = (String) rs.getString(rs.getColumnIndex(TAG_VAK));
+                int ects = (Integer) rs.getInt(rs.getColumnIndex(TAG_ECTS));
+                double grade = (Double) rs.getDouble(rs.getColumnIndex(TAG_GRADE));
+                int period = (Integer) rs.getInt(rs.getColumnIndex(TAG_PERIOD));
+                int studiejaar = (Integer) rs.getInt(rs.getColumnIndex(TAG_STUDIEJAAR));
+
+                //add opgehaalde data in de model
+
+                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar));
+
+                //ga naar de volgende in de rij.
+                rs.moveToNext();
+
+            }
+            //zet listview items etc nadat het geladen is uit de e database
+            mListView = (ListView) findViewById(R.id.my_list_view);
+            mAdapter = new CourseListAdapter(CourseListActivity.this, 0, courseModels);
+            mListView.setAdapter(mAdapter);
+
+        }
+
+    }
+
+    public void ShowDataStudieJaar4()
+    {
+
+        DatabaseHelper dbHelper = DatabaseHelper.getHelper(this);
+        //sortorder op periode
+        String stj4 = "4";
+        String order = DatabaseInfo.CourseColumn.PERIOD + " ASC";
+        //String order = PERIOD + ", " ;
+        Cursor rs = dbHelper.query(DatabaseInfo.CourseTables.COURSE + " WHERE " + TAG_STUDIEJAAR + "='" + stj4 + "'", projection,null,null,null,null,order);
 
         //Cursor rs = dbHelper.query(DatabaseInfo.CourseTables.COURSE, projection, null, null, null, null, order);
         //skip lege elementen die misschien eerst staan.
