@@ -42,44 +42,36 @@ public class CourseListActivity extends AppCompatActivity {
     String studiejaar4;
     Toolbar toolbar;
 
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add("Click here");
-        //if (v.getId()==R.id.my_list_view) {
-         //   MenuInflater inflater = getMenuInflater();
-           // inflater.inflate(R.menu.menu_list, menu);
-        //}
-    }
 
+        if (v.getId()==R.id.my_list_view) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_list, menu);
+
+        }
+
+    }
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        super.onContextItemSelected(item);
 
-        if(item.getTitle() == "Click here")
-        {
-            Toast.makeText(this,"Hello", Toast.LENGTH_LONG).show();
-        }
-        return true;
 
-        /*switch(item.getItemId()) {
+        switch(item.getItemId()) {
             case R.id.cijferaanpassen:
-                // add stuff here
+
                 return true;
             case R.id.notitietoevoegen:
-                // edit stuff here
+
                 return true;
             case R.id.notitiebekijken:
-                // remove stuff here
-                return true;
+
             default:
                 return super.onContextItemSelected(item);
         }
-        /*
-
-         */
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

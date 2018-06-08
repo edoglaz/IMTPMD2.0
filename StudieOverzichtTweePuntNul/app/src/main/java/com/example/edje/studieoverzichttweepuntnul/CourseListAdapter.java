@@ -30,10 +30,10 @@ public class CourseListAdapter extends ArrayAdapter<CourseModel> {
             convertView = li.inflate(R.layout.view_content_row, parent, false);
             vh.NAME = (TextView) convertView.findViewById(R.id.subject_name);
             vh.ECTS = (TextView) convertView.findViewById(R.id.subject_ects);
-            vh.GRADE = (EditText) convertView.findViewById(R.id.subject_grade);
+            vh.GRADE = (TextView) convertView.findViewById(R.id.subject_grade);
             vh.PERIOD = (TextView) convertView.findViewById(R.id.subject_period);
             vh.CODE = (TextView) convertView.findViewById(R.id.subject_code);
-            vh.STUDIEJAAR = (TextView) convertView.findViewById(R.id.subject_studiejaar);
+            //vh.STUDIEJAAR = (TextView) convertView.findViewById(R.id.subject_studiejaar);
             convertView.setTag(vh);
 
         } else {
@@ -46,7 +46,7 @@ public class CourseListAdapter extends ArrayAdapter<CourseModel> {
         vh.GRADE.setText("Cijfer:"+(CharSequence) cm.getGrade());
         vh.PERIOD.setText("Periode:"+(CharSequence) cm.getPeriod());
         vh.CODE.setText("Course code:"+(CharSequence) cm.getCode());
-        vh.STUDIEJAAR.setText("Studiejaar:"+(CharSequence) cm.getStudiejaar());
+        //vh.STUDIEJAAR.setText("Studiejaar:"+(CharSequence) cm.getStudiejaar());
         return convertView;
     }
 
@@ -54,7 +54,7 @@ public class CourseListAdapter extends ArrayAdapter<CourseModel> {
         TextView NAME;
         TextView PERIOD;
         TextView ECTS;
-        EditText GRADE;
+        TextView GRADE;
         TextView CODE;
         TextView STUDIEJAAR;
     }

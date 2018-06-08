@@ -35,7 +35,7 @@
         android:text=" EN DEZE TEXT OOK "
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-    <EditText
+    <TextView
         android:id="@+id/subject_grade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,15 +53,7 @@
         android:paddingTop="20dp"
         android:text=" EN DEZE TEXT OOK "
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-    <TextView
-        android:id="@+id/subject_studiejaar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="20dp"
-        android:text=" EN DEZE TEXT OOK "
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
 
 
 
