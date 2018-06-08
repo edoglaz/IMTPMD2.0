@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">StudieOverzichtTweePuntNul</string>
     <string-array name="studiejaren">
-    <item>Jaar 1(Propedeuse)</item>
-    <item>Jaar 2</item>
-    <item>Jaar 3</item>
-    <item>Jaar 4</item>
-    <item>Grafisch Overzicht</item>
+        <item>Jaar 1(Propedeuse)</item>
+        <item>Jaar 2</item>
+        <item>Jaar 3</item>
+        <item>Jaar 4</item>
+        <item>Grafisch Overzicht</item>
     </string-array>
 </resources>

@@ -62,7 +62,8 @@ public class CourseListActivity extends AppCompatActivity {
 
         switch(item.getItemId()) {
             case R.id.cijferaanpassen:
-
+                Intent intent = new Intent(CourseListActivity.this, CijferAanpassen.class);
+                startActivity(intent);
                 return true;
             case R.id.notitietoevoegen:
 
@@ -73,6 +74,8 @@ public class CourseListActivity extends AppCompatActivity {
                 return super.onContextItemSelected(item);
         }
     }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,21 +124,34 @@ public class CourseListActivity extends AppCompatActivity {
 
         }
 
-      /*  mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
 
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //krijg de opgeslagen data van de positie
+                CourseModel data = (CourseModel) parent.getItemAtPosition(position);
 
+                //haal de data eruit
+                String name = data.naam;
+                int ects = data.aantalECTS;
+                double grade = data.cijfer;
+                int period = data.periode;
+                //stuur data door van het aangeklikte item
+                Intent i = new Intent(getApplicationContext(), CijferAanpassen.class);
+                i.putExtra(TAG_VAK,name);
+                i.putExtra(TAG_ECTS,ects);
+                i.putExtra(TAG_GRADE,grade);
+                i.putExtra(TAG_PERIOD,period);
+                startActivity(i);
             }
-
         });
-        /*
 
-         */
+
 
     }
+
+
 
 
 
