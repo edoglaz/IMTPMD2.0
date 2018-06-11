@@ -1,6 +1,9 @@
 package com.example.edje.studieoverzichttweepuntnul;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,18 +11,21 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.edje.studieoverzichttweepuntnul.Database.DatabaseHelper;
+import com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo;
 import com.example.edje.studieoverzichttweepuntnul.Model.CourseModel;
 
 import java.util.List;
 
+
 import static java.security.AccessController.getContext;
 
 public class CourseListAdapter extends ArrayAdapter<CourseModel> {
-
+    String TAG_GRADE = "grade";
     public CourseListAdapter(Context context, int resource, List<CourseModel> objects){
         super(context, resource, objects);
     }
-
+    String[] projection = {DatabaseInfo.CourseColumn.NAME, DatabaseInfo.CourseColumn.ECTS,DatabaseInfo.CourseColumn.GRADE, DatabaseInfo.CourseColumn.PERIOD};
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
@@ -39,14 +45,26 @@ public class CourseListAdapter extends ArrayAdapter<CourseModel> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
+        //double selection = DatabaseInfo.CourseColumn.GRADE;
+
 
         CourseModel cm = getItem(position);
+        String grade1 = cm.getGrade();
+        double grade2 = Double.parseDouble(grade1);
+        if(grade2 >= 5.5)
+        {
+            convertView.setBackgroundColor(Color.parseColor("#3CFD50"));
+        }
+        else{
+            convertView.setBackgroundColor(Color.parseColor("#FD3C3C"));
+        }
         vh.NAME.setText("Vak:"+(CharSequence) cm.getName());
         vh.ECTS.setText("Aantal Ects:"+(CharSequence) cm.getEcts());
         vh.GRADE.setText("Cijfer:"+(CharSequence) cm.getGrade());
         vh.PERIOD.setText("Periode:"+(CharSequence) cm.getPeriod());
         vh.CODE.setText("Course code:"+(CharSequence) cm.getCode());
         //vh.STUDIEJAAR.setText("Studiejaar:"+(CharSequence) cm.getStudiejaar());
+
         return convertView;
     }
 

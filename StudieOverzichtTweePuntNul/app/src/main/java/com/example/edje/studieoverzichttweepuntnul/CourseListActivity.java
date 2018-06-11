@@ -2,6 +2,7 @@ package com.example.edje.studieoverzichttweepuntnul;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +22,8 @@ import com.example.edje.studieoverzichttweepuntnul.Model.CourseModel;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.STUDIEJAAR;
 
@@ -76,6 +79,8 @@ public class CourseListActivity extends AppCompatActivity {
     }
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +89,7 @@ public class CourseListActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         DatabaseHelper dbHelper = DatabaseHelper.getHelper(this);
         registerForContextMenu(mListView);
-
+        
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             toolbar.setTitle(bundle.getString("StudieJaar"));
@@ -150,7 +155,6 @@ public class CourseListActivity extends AppCompatActivity {
 
 
     }
-
 
 
 

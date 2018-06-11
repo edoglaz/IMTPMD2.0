@@ -35,7 +35,7 @@ public class CijferAanpassen extends AppCompatActivity {
     String TAG_GRADE = "grade";
     String TAG_PERIOD = "period";
     //String WHERE = name = "name" ;
-
+    private CourseListAdapter mAdapter;
     Button opslaan;
     Button annuleren;
     //data van item
@@ -63,7 +63,7 @@ public class CijferAanpassen extends AppCompatActivity {
             period = bundle.getInt(TAG_PERIOD);
             grade = bundle.getDouble(TAG_GRADE);
         }
-        
+
 
         //toolbar.setTitle(name);
         TextView vakgrade = (TextView) findViewById(R.id.cijferaanpassen);
@@ -102,9 +102,9 @@ public class CijferAanpassen extends AppCompatActivity {
     public void annuleren(View v)
     {
         //ga terug naar invoer.
-        Intent i = new Intent(getApplicationContext(), CijferAanpassen.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+        //Intent i = new Intent(getApplicationContext(), CourseListActivity.class);
+        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //startActivity(i);
 
         finish();
     }
@@ -112,9 +112,10 @@ public class CijferAanpassen extends AppCompatActivity {
     {
         //zorg dat de data opgeslagen wordt
         saveData();
-        Intent i = new Intent(getApplicationContext(), CijferAanpassen.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+        //Intent i = new Intent(getApplicationContext(), CourseListActivity.class);
+        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //startActivity(i);
+
         finish();
     }
 /*
@@ -139,6 +140,9 @@ public class CijferAanpassen extends AppCompatActivity {
 
         //update de tabel waar name gelijk is aan de name in de tabelnaam
         String[] args = {name};
+
         db.update(DatabaseInfo.CourseTables.COURSE, values, DatabaseInfo.CourseColumn.NAME + "=?", args);
+
+
     }
 }
