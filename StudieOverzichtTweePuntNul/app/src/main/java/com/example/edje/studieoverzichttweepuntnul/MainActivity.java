@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.studiejaren));
-        grafisch = getResources().getStringArray(R.array.studiejaren)[4];
+        grafisch = getResources().getStringArray(R.array.studiejaren)[5];
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){

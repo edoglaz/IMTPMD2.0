@@ -43,6 +43,7 @@ public class CourseListActivity extends AppCompatActivity {
     String studiejaar2;
     String studiejaar3;
     String studiejaar4;
+    String keuzevakken;
     Toolbar toolbar;
 
     @Override
@@ -130,7 +131,13 @@ public class CourseListActivity extends AppCompatActivity {
         }
 
 
+        keuzevakken = getResources().getStringArray(R.array.studiejaren)[4];
+        if (toolbar.getTitle().equals(keuzevakken))
+        {
 
+            ShowDataKeuzevakken();
+
+        }
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -343,6 +350,49 @@ public class CourseListActivity extends AppCompatActivity {
         }
 
     }
+    public void ShowDataKeuzevakken()
+    {
 
+        DatabaseHelper dbHelper = DatabaseHelper.getHelper(this);
+        //sortorder op periode
+        String stj5 = "5";
+        String order = DatabaseInfo.CourseColumn.PERIOD + " ASC";
+        //String order = PERIOD + ", " ;
+        Cursor rs = dbHelper.query(DatabaseInfo.CourseTables.COURSE + " WHERE " + TAG_STUDIEJAAR + "='" + stj5 + "'", projection,null,null,null,null,order);
+
+        //Cursor rs = dbHelper.query(DatabaseInfo.CourseTables.COURSE, projection, null, null, null, null, order);
+        //skip lege elementen die misschien eerst staan.
+        rs.moveToFirst();
+        if (rs.getCount() == 0) {
+            Toast.makeText(this,
+                    "geen database beschikbaar",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            //gooi  het in een loop en lees ze stuk voor stk uit
+            for (int a = 0; a < rs.getCount(); a++) {
+
+                String code = (String) rs.getString(rs.getColumnIndex(TAG_CODE));
+                String naam = (String) rs.getString(rs.getColumnIndex(TAG_VAK));
+                int ects = (Integer) rs.getInt(rs.getColumnIndex(TAG_ECTS));
+                double grade = (Double) rs.getDouble(rs.getColumnIndex(TAG_GRADE));
+                int period = (Integer) rs.getInt(rs.getColumnIndex(TAG_PERIOD));
+                int studiejaar = (Integer) rs.getInt(rs.getColumnIndex(TAG_STUDIEJAAR));
+
+                //add opgehaalde data in de model
+
+                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar));
+
+                //ga naar de volgende in de rij.
+                rs.moveToNext();
+
+            }
+            //zet listview items etc nadat het geladen is uit de e database
+            mListView = (ListView) findViewById(R.id.my_list_view);
+            mAdapter = new CourseListAdapter(CourseListActivity.this, 0, courseModels);
+            mListView.setAdapter(mAdapter);
+
+        }
+
+    }
 
 }

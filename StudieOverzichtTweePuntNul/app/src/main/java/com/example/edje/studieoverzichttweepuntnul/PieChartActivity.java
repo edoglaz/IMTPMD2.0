@@ -47,7 +47,7 @@ public class PieChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pie_chart);
 
         mChart = (PieChart) findViewById(R.id.chart);
-        mChart.setDescription(" description ");
+        mChart.setDescription(" Overzicht van alle behaalde studiepunten ");
         mChart.setTouchEnabled(false);
         mChart.setDrawSliceText(true);
         mChart.getLegend().setEnabled(false);
