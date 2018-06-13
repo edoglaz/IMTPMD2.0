@@ -13,15 +13,16 @@ public class CourseModel {
     public int periode;
     public String naam;
     public int studiejaar;
+    public String notitie;
 
-    public CourseModel(String vc, String n, int ae, double c, int p, int sj) {
+    public CourseModel(String vc, String n, int ae, double c, int p, int sj,String note) {
         this.vakCode = vc;
         this.naam = n;
         this.aantalECTS = ae;
         this.cijfer = c;
         this.periode = p;
         this.studiejaar = sj;
-
+        this.notitie = note;
 
     }
 
@@ -44,6 +45,8 @@ public class CourseModel {
     public String getCode(){
         return String.valueOf(vakCode);
     }
+
+    public String getNotitie() {return String.valueOf(notitie);}
 
     public String getStudiejaar(){
         return String.valueOf(studiejaar);

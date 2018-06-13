@@ -35,6 +35,7 @@
         android:inputType="numberDecimal"
         android:layout_marginTop="113dp"
         android:ems="10"
+        android:ellipsize="end"
 
         android:text="" />
 
@@ -54,10 +55,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_alignParentTop="true"
-
-        android:layout_marginTop="221dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="239dp"
         android:background="#26c6da"
         android:onClick="annuleren"
         android:text="annuleren" />
+
+    <EditText
+        android:id="@+id/notitie"
+        android:layout_width="337dp"
+        android:layout_height="63dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="199dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="172dp"
+        android:text="Voeg hier eventueel een notitie toe" />
 </RelativeLayout>

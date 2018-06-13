@@ -34,6 +34,7 @@ public class CijferAanpassen extends AppCompatActivity {
     String TAG_ECTS = "ects";
     String TAG_GRADE = "grade";
     String TAG_PERIOD = "period";
+    String TAG_NOTITIE = "notitie";
     //String WHERE = name = "name" ;
     private CourseListAdapter mAdapter;
     Button opslaan;
@@ -43,6 +44,7 @@ public class CijferAanpassen extends AppCompatActivity {
     private int ect;
     private int period;
     private double grade;
+    private String note;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,10 +64,19 @@ public class CijferAanpassen extends AppCompatActivity {
             ect = bundle.getInt(TAG_ECTS);
             period = bundle.getInt(TAG_PERIOD);
             grade = bundle.getDouble(TAG_GRADE);
+            note = bundle.getString(TAG_NOTITIE);
         }
 
-
+        String note1= String.valueOf(note);
         //toolbar.setTitle(name);
+        if(note1.equals("null")) {
+            TextView notitietekst = (TextView) findViewById(R.id.notitie);
+            notitietekst.setHint("Schrijf hier uw notitie:");
+        }
+        else{
+            TextView notitietekst = (TextView) findViewById(R.id.notitie);
+            notitietekst.setText(String.valueOf(note));
+        }
         TextView vakgrade = (TextView) findViewById(R.id.cijferaanpassen);
         vakgrade.setText(String.valueOf(grade));
 /*
@@ -127,8 +138,10 @@ public class CijferAanpassen extends AppCompatActivity {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         //store values en schrijf weg ind e database
         EditText cijfer = (EditText) findViewById(R.id.cijferaanpassen);
+        EditText notitie = (EditText) findViewById(R.id.notitie);
+        cijfer.setSelection(cijfer.getText().length());
         double nieuwecijfer = Double.parseDouble(cijfer.getText().toString());
-
+        String notitie1 = notitie.getText().toString();
 
         //name hoeft eigenlijk niet meegegeven te worden
         ContentValues values = new ContentValues();
@@ -136,6 +149,7 @@ public class CijferAanpassen extends AppCompatActivity {
         values.put(DatabaseInfo.CourseColumn.ECTS, ect);
         values.put(DatabaseInfo.CourseColumn.GRADE, nieuwecijfer);
         values.put(DatabaseInfo.CourseColumn.PERIOD, period);
+        values.put(DatabaseInfo.CourseColumn.NOTITIE, notitie1);
 
 
         //update de tabel waar name gelijk is aan de name in de tabelnaam

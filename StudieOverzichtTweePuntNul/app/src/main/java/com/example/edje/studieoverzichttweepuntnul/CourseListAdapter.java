@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import static java.security.AccessController.getContext;
 
 public class CourseListAdapter extends ArrayAdapter<CourseModel> {
     String TAG_GRADE = "grade";
+
     public CourseListAdapter(Context context, int resource, List<CourseModel> objects){
         super(context, resource, objects);
     }

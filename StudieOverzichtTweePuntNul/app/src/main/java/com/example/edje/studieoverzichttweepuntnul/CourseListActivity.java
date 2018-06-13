@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,13 +26,14 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
+import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.NOTITIE;
 import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.STUDIEJAAR;
 
 public class CourseListActivity extends AppCompatActivity {
     private ListView mListView;
     private CourseListAdapter mAdapter;
     private List<CourseModel> courseModels = new ArrayList<>();
-    String[] projection = {DatabaseInfo.CourseColumn.NAME,DatabaseInfo.CourseColumn.CODE, DatabaseInfo.CourseColumn.ECTS,DatabaseInfo.CourseColumn.GRADE, DatabaseInfo.CourseColumn.PERIOD, STUDIEJAAR};
+    String[] projection = {DatabaseInfo.CourseColumn.NAME,DatabaseInfo.CourseColumn.CODE, DatabaseInfo.CourseColumn.ECTS,DatabaseInfo.CourseColumn.GRADE, DatabaseInfo.CourseColumn.PERIOD, STUDIEJAAR, NOTITIE};
 
     String TAG_VAK = "name";
     String TAG_ECTS = "ects";
@@ -39,13 +41,16 @@ public class CourseListActivity extends AppCompatActivity {
     String TAG_PERIOD = "period";
     String TAG_CODE = "code";
     String TAG_STUDIEJAAR = "studiejaar";
+    String TAG_NOTITIE = "notitie";
     String studiejaar1;
     String studiejaar2;
     String studiejaar3;
     String studiejaar4;
     String keuzevakken;
+    String nothing;
     Toolbar toolbar;
 
+    /*
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -61,13 +66,12 @@ public class CourseListActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
 
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         switch(item.getItemId()) {
             case R.id.cijferaanpassen:
-                Intent intent = new Intent(CourseListActivity.this, CijferAanpassen.class);
-                startActivity(intent);
+
                 return true;
             case R.id.notitietoevoegen:
 
@@ -79,7 +83,9 @@ public class CourseListActivity extends AppCompatActivity {
         }
     }
 
+/*
 
+ */
 
 
     @Override
@@ -141,7 +147,10 @@ public class CourseListActivity extends AppCompatActivity {
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //krijg de opgeslagen data van de positie
+
+
+
+
                 CourseModel data = (CourseModel) parent.getItemAtPosition(position);
 
                 //haal de data eruit
@@ -149,13 +158,22 @@ public class CourseListActivity extends AppCompatActivity {
                 int ects = data.aantalECTS;
                 double grade = data.cijfer;
                 int period = data.periode;
+                String notitie = data.notitie;
                 //stuur data door van het aangeklikte item
                 Intent i = new Intent(getApplicationContext(), CijferAanpassen.class);
                 i.putExtra(TAG_VAK,name);
                 i.putExtra(TAG_ECTS,ects);
                 i.putExtra(TAG_GRADE,grade);
                 i.putExtra(TAG_PERIOD,period);
+                i.putExtra(TAG_NOTITIE,notitie);
                 startActivity(i);
+
+
+
+
+
+
+
             }
         });
 
@@ -189,14 +207,16 @@ public class CourseListActivity extends AppCompatActivity {
 
                     String code = (String) rs.getString(rs.getColumnIndex(TAG_CODE));
                     String naam = (String) rs.getString(rs.getColumnIndex(TAG_VAK));
+                    String notitie = (String) rs.getString(rs.getColumnIndex(TAG_NOTITIE));
                     int ects = (Integer) rs.getInt(rs.getColumnIndex(TAG_ECTS));
                     double grade = (Double) rs.getDouble(rs.getColumnIndex(TAG_GRADE));
                     int period = (Integer) rs.getInt(rs.getColumnIndex(TAG_PERIOD));
                     int studiejaar = (Integer) rs.getInt(rs.getColumnIndex(TAG_STUDIEJAAR));
 
+
                     //add opgehaalde data in de model
 
-                    courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar));
+                    courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar, notitie));
 
                     //ga naar de volgende in de rij.
                     rs.moveToNext();
@@ -239,6 +259,7 @@ public class CourseListActivity extends AppCompatActivity {
 
                 String code = (String) rs.getString(rs.getColumnIndex(TAG_CODE));
                 String naam = (String) rs.getString(rs.getColumnIndex(TAG_VAK));
+                String notitie = (String) rs.getString(rs.getColumnIndex(TAG_NOTITIE));
                 int ects = (Integer) rs.getInt(rs.getColumnIndex(TAG_ECTS));
                 double grade = (Double) rs.getDouble(rs.getColumnIndex(TAG_GRADE));
                 int period = (Integer) rs.getInt(rs.getColumnIndex(TAG_PERIOD));
@@ -246,7 +267,7 @@ public class CourseListActivity extends AppCompatActivity {
 
                 //add opgehaalde data in de model
 
-                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar));
+                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar, notitie));
 
                 //ga naar de volgende in de rij.
                 rs.moveToNext();
@@ -284,6 +305,7 @@ public class CourseListActivity extends AppCompatActivity {
 
                 String code = (String) rs.getString(rs.getColumnIndex(TAG_CODE));
                 String naam = (String) rs.getString(rs.getColumnIndex(TAG_VAK));
+                String notitie = (String) rs.getString(rs.getColumnIndex(TAG_NOTITIE));
                 int ects = (Integer) rs.getInt(rs.getColumnIndex(TAG_ECTS));
                 double grade = (Double) rs.getDouble(rs.getColumnIndex(TAG_GRADE));
                 int period = (Integer) rs.getInt(rs.getColumnIndex(TAG_PERIOD));
@@ -291,7 +313,7 @@ public class CourseListActivity extends AppCompatActivity {
 
                 //add opgehaalde data in de model
 
-                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar));
+                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar, notitie));
 
                 //ga naar de volgende in de rij.
                 rs.moveToNext();
@@ -329,6 +351,7 @@ public class CourseListActivity extends AppCompatActivity {
 
                 String code = (String) rs.getString(rs.getColumnIndex(TAG_CODE));
                 String naam = (String) rs.getString(rs.getColumnIndex(TAG_VAK));
+                String notitie = (String) rs.getString(rs.getColumnIndex(TAG_NOTITIE));
                 int ects = (Integer) rs.getInt(rs.getColumnIndex(TAG_ECTS));
                 double grade = (Double) rs.getDouble(rs.getColumnIndex(TAG_GRADE));
                 int period = (Integer) rs.getInt(rs.getColumnIndex(TAG_PERIOD));
@@ -336,7 +359,7 @@ public class CourseListActivity extends AppCompatActivity {
 
                 //add opgehaalde data in de model
 
-                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar));
+                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar, notitie));
 
                 //ga naar de volgende in de rij.
                 rs.moveToNext();
@@ -373,6 +396,7 @@ public class CourseListActivity extends AppCompatActivity {
 
                 String code = (String) rs.getString(rs.getColumnIndex(TAG_CODE));
                 String naam = (String) rs.getString(rs.getColumnIndex(TAG_VAK));
+                String notitie = (String) rs.getString(rs.getColumnIndex(TAG_NOTITIE));
                 int ects = (Integer) rs.getInt(rs.getColumnIndex(TAG_ECTS));
                 double grade = (Double) rs.getDouble(rs.getColumnIndex(TAG_GRADE));
                 int period = (Integer) rs.getInt(rs.getColumnIndex(TAG_PERIOD));
@@ -380,7 +404,7 @@ public class CourseListActivity extends AppCompatActivity {
 
                 //add opgehaalde data in de model
 
-                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar));
+                courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar, notitie));
 
                 //ga naar de volgende in de rij.
                 rs.moveToNext();

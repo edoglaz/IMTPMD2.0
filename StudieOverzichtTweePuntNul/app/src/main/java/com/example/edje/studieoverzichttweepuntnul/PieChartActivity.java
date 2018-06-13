@@ -59,7 +59,7 @@ public class PieChartActivity extends AppCompatActivity {
 
 
     }
-
+//De code hieronder zorgt ervoor dat als er op de backbutton van de telefoon wordt geklikt de app je gelijk meeneemt naar de mainactivity. Er zat namelijk een bug in dat hij een lege "Grafisch Overzicht" activity liet zien.
     public void onBackPressed() {
         Intent startMain = new Intent(PieChartActivity.this, MainActivity.class);
         startMain.addCategory(Intent.CATEGORY_HOME);
