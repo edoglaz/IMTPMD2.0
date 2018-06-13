@@ -32,10 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-
+        android:inputType="numberDecimal"
         android:layout_marginTop="113dp"
         android:ems="10"
-        android:inputType="textPersonName"
+
         android:text="" />
 
     <Button

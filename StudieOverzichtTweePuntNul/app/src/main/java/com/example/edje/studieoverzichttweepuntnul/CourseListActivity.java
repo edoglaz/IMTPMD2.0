@@ -89,7 +89,7 @@ public class CourseListActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         DatabaseHelper dbHelper = DatabaseHelper.getHelper(this);
         registerForContextMenu(mListView);
-        
+
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             toolbar.setTitle(bundle.getString("StudieJaar"));

@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".CourseListAdapter" />
         <activity android:name=".CourseListActivity" />
-        <activity android:name=".CijferAanpassen"></activity>
+        <activity android:name=".CijferAanpassen" />
+        <activity android:name=".PieChartActivity"></activity>
     </application>
 
 </manifest>

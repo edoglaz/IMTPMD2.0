@@ -70,14 +70,12 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("StudieJaar",listView.getItemAtPosition(i).toString());
                 startActivity(intent);
 
- /*
+
                 if(grafisch.equals(listView.getItemAtPosition(i).toString())){
-                    Intent intent2 = new Intent(MainActivity.this, ChartActivity.class);
+                    Intent intent2 = new Intent(MainActivity.this, PieChartActivity.class);
                     startActivity(intent2);
                 }
-                /*
 
-                 */
 
             }
         });
