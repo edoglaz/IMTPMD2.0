@@ -1,6 +1,7 @@
 package com.example.edje.studieoverzichttweepuntnul;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -59,7 +60,13 @@ public class PieChartActivity extends AppCompatActivity {
 
     }
 
+    public void onBackPressed() {
+        Intent startMain = new Intent(PieChartActivity.this, MainActivity.class);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
 
+    }
 
 
 
