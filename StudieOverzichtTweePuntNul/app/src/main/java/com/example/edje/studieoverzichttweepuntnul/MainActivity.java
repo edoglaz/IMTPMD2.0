@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +31,9 @@ import com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+/**
+ * Created by Edo on 14-6-2018.
+ */
 public class MainActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     RequestQueue requestQueue;
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         listView.setAdapter(mAdapter);
+        //listView.setBackgroundColor(Color.parseColor("#1565C0"));
 
 
         CheckDatabase();

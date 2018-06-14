@@ -18,13 +18,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo;
 import com.example.edje.studieoverzichttweepuntnul.Database.DatabaseHelper;
 
 
 /**
- * Created by sandor on 22-3-2016.
+ * Created by Edo on 14-6-2018.
  */
 public class CijferAanpassen extends AppCompatActivity {
     //tags voor de data
@@ -45,6 +46,8 @@ public class CijferAanpassen extends AppCompatActivity {
     private int period;
     private double grade;
     private String note;
+    private String titel;
+    private Cursor rs=null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class CijferAanpassen extends AppCompatActivity {
             period = bundle.getInt(TAG_PERIOD);
             grade = bundle.getDouble(TAG_GRADE);
             note = bundle.getString(TAG_NOTITIE);
+            //titel = bundle.getString("titel");
         }
 
         String note1= String.valueOf(note);
@@ -115,6 +119,7 @@ public class CijferAanpassen extends AppCompatActivity {
         //ga terug naar invoer.
         //Intent i = new Intent(getApplicationContext(), CourseListActivity.class);
         //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //i.putExtra("titel",titel);
         //startActivity(i);
 
         finish();
@@ -123,9 +128,13 @@ public class CijferAanpassen extends AppCompatActivity {
     {
         //zorg dat de data opgeslagen wordt
         saveData();
-        //Intent i = new Intent(getApplicationContext(), CourseListActivity.class);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        //i.putExtra("titel",titel);
         //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //startActivity(i);
+        String toast = "Je data is opgeslagen!";
+        Toast.makeText(getApplicationContext(), "Je data is opgeslagen!",
+                Toast.LENGTH_LONG).show();
+        startActivity(i);
 
         finish();
     }

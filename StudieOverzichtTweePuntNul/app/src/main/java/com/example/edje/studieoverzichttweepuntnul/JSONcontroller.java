@@ -1,5 +1,7 @@
 package com.example.edje.studieoverzichttweepuntnul;
-
+/**
+ * Created by Edo on 14-6-2018.
+ */
 import android.app.Application;
 import android.text.TextUtils;
 

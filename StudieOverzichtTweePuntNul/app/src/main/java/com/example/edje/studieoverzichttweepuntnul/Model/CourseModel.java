@@ -4,8 +4,9 @@ import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.
 import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.GRADE;
 import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.NAME;
 import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.PERIOD;
-
-public class CourseModel {
+/**
+ * Created by Edo on 14-6-2018.
+ */public class CourseModel {
 
     public String vakCode;
     public int aantalECTS;

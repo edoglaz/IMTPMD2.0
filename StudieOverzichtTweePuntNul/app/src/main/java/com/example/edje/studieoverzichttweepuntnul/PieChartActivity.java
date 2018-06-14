@@ -22,7 +22,9 @@ import com.github.mikephil.charting.data.PieDataSet;
 
 import java.util.ArrayList;
 import java.util.Map;
-
+/**
+ * Created by Edo on 14-6-2018.
+ */
 
 
 public class PieChartActivity extends AppCompatActivity {
@@ -106,11 +108,11 @@ public class PieChartActivity extends AppCompatActivity {
 
         //  http://www.materialui.co/colors
         ArrayList<Integer> colors = new ArrayList<>();
-        if (studiepunten < 10) {
+        if (studiepunten < 60) {
             colors.add(Color.rgb(255, 0, 0));
-        } else if (studiepunten < 40) {
+        } else if (studiepunten < 120) {
             colors.add(Color.rgb(255, 100, 0));
-        } else if (studiepunten < 50) {
+        } else if (studiepunten < 180) {
             colors.add(Color.rgb(253, 254, 0));
         } else {
             colors.add(Color.rgb(0, 255, 0));

@@ -28,7 +28,9 @@ import java.util.concurrent.TimeoutException;
 
 import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.NOTITIE;
 import static com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo.CourseColumn.STUDIEJAAR;
-
+/**
+ * Created by Edo on 14-6-2018.
+ */
 public class CourseListActivity extends AppCompatActivity {
     private ListView mListView;
     private CourseListAdapter mAdapter;
@@ -48,6 +50,7 @@ public class CourseListActivity extends AppCompatActivity {
     String studiejaar4;
     String keuzevakken;
     String nothing;
+    String titel;
     Toolbar toolbar;
 
     /*
@@ -101,6 +104,7 @@ public class CourseListActivity extends AppCompatActivity {
         if(bundle != null){
             toolbar.setTitle(bundle.getString("StudieJaar"));
 
+
         }
 
 
@@ -109,7 +113,7 @@ public class CourseListActivity extends AppCompatActivity {
         {
 
                 ShowDataStudieJaar1();
-
+                onResume();
         }
 
         studiejaar2 = getResources().getStringArray(R.array.studiejaren)[1];
@@ -117,7 +121,7 @@ public class CourseListActivity extends AppCompatActivity {
         {
 
             ShowDataStudieJaar2();
-
+            onResume();
         }
 
         studiejaar3 = getResources().getStringArray(R.array.studiejaren)[2];
@@ -125,7 +129,7 @@ public class CourseListActivity extends AppCompatActivity {
         {
 
             ShowDataStudieJaar3();
-
+            onResume();
         }
 
         studiejaar4 = getResources().getStringArray(R.array.studiejaren)[3];
@@ -133,6 +137,7 @@ public class CourseListActivity extends AppCompatActivity {
         {
 
             ShowDataStudieJaar4();
+            onResume();
 
         }
 
@@ -142,6 +147,7 @@ public class CourseListActivity extends AppCompatActivity {
         {
 
             ShowDataKeuzevakken();
+            onResume();
 
         }
 
@@ -159,6 +165,7 @@ public class CourseListActivity extends AppCompatActivity {
                 double grade = data.cijfer;
                 int period = data.periode;
                 String notitie = data.notitie;
+
                 //stuur data door van het aangeklikte item
                 Intent i = new Intent(getApplicationContext(), CijferAanpassen.class);
                 i.putExtra(TAG_VAK,name);
@@ -166,6 +173,7 @@ public class CourseListActivity extends AppCompatActivity {
                 i.putExtra(TAG_GRADE,grade);
                 i.putExtra(TAG_PERIOD,period);
                 i.putExtra(TAG_NOTITIE,notitie);
+                i.putExtra("titel",getTitle().toString());
                 startActivity(i);
 
 
@@ -181,8 +189,13 @@ public class CourseListActivity extends AppCompatActivity {
 
     }
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        // fetch updated data
+        mAdapter.updateList(courseModels);
+        mAdapter.notifyDataSetChanged();
+    }
 
     public void ShowDataStudieJaar1()
         {
@@ -217,9 +230,9 @@ public class CourseListActivity extends AppCompatActivity {
                     //add opgehaalde data in de model
 
                     courseModels.add(new CourseModel(code, naam, ects, grade, period, studiejaar, notitie));
-
+                rs.moveToNext();
                     //ga naar de volgende in de rij.
-                    rs.moveToNext();
+
 
                 }
                 //zet listview items etc nadat het geladen is uit de e database

@@ -1,5 +1,7 @@
 package com.example.edje.studieoverzichttweepuntnul.Database;
-
+/**
+ * Created by Edo on 14-6-2018.
+ */
 public class DatabaseInfo {
 
     public class CourseTables {

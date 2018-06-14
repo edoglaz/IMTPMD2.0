@@ -10,20 +10,26 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.edje.studieoverzichttweepuntnul.Database.DatabaseHelper;
 import com.example.edje.studieoverzichttweepuntnul.Database.DatabaseInfo;
 import com.example.edje.studieoverzichttweepuntnul.Model.CourseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 import static java.security.AccessController.getContext;
-
+/**
+ * Created by Edo on 14-6-2018.
+ */
 public class CourseListAdapter extends ArrayAdapter<CourseModel> {
     String TAG_GRADE = "grade";
-
+    private ListView mListView;
+    private CourseListAdapter mAdapter;
+    private List<CourseModel> courseModels = new ArrayList<>();
     public CourseListAdapter(Context context, int resource, List<CourseModel> objects){
         super(context, resource, objects);
     }
@@ -55,21 +61,24 @@ public class CourseListAdapter extends ArrayAdapter<CourseModel> {
         double grade2 = Double.parseDouble(grade1);
         if(grade2 >= 5.5)
         {
-            convertView.setBackgroundColor(Color.parseColor("#3CFD50"));
+            convertView.setBackgroundColor(Color.parseColor("#C8E6C9"));
         }
         else{
-            convertView.setBackgroundColor(Color.parseColor("#FD3C3C"));
+            convertView.setBackgroundColor(Color.parseColor("#FFCCBC"));
         }
-        vh.NAME.setText("Vak:"+(CharSequence) cm.getName());
+        vh.NAME.setText(""+(CharSequence) cm.getName());
         vh.ECTS.setText("Aantal Ects:"+(CharSequence) cm.getEcts());
         vh.GRADE.setText("Cijfer:"+(CharSequence) cm.getGrade());
         vh.PERIOD.setText("Periode:"+(CharSequence) cm.getPeriod());
-        vh.CODE.setText("Course code:"+(CharSequence) cm.getCode());
+        vh.CODE.setText(""+(CharSequence) cm.getCode());
         //vh.STUDIEJAAR.setText("Studiejaar:"+(CharSequence) cm.getStudiejaar());
 
         return convertView;
     }
-
+    public void updateList(List<CourseModel> courseModels) {
+        this.courseModels.clear();
+        this.courseModels.addAll(courseModels);
+    }
     private static class ViewHolder {
         TextView NAME;
         TextView PERIOD;
