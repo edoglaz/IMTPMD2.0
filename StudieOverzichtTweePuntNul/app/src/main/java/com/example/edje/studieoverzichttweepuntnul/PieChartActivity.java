@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +38,7 @@ public class PieChartActivity extends AppCompatActivity {
 
     int studiepunten;
     int nogbehalen;
-
+    Toolbar toolbar;
     String TAG_VAK = "name";
     String TAG_ECTS = "ects";
     String TAG_GRADE = "grade";
@@ -48,11 +49,23 @@ public class PieChartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pie_chart);
+        toolbar = (Toolbar) findViewById(R.id.toolbar5);
+        Bundle bundle = getIntent().getExtras();
+        // neemt vanuit de vorige klasse de naam van het listview item mee en zet de titel van de toolbar als zodanig.
+        if(bundle != null){
+            toolbar.setTitle(bundle.getString("grafisch"));
+
+
+        }
 
         mChart = (PieChart) findViewById(R.id.chart);
+        //zet de tekst neer die je wilt
         mChart.setDescription(" Overzicht van alle behaalde studiepunten ");
+        //Bepaal de grote van de beschrijving
+        mChart.setDescriptionTextSize(25);
         mChart.setTouchEnabled(false);
         mChart.setDrawSliceText(true);
+
         mChart.getLegend().setEnabled(false);
         mChart.setTransparentCircleColor(Color.rgb(130, 130, 130));
         mChart.animateY(1400, Easing.EasingOption.EaseInOutQuad);
@@ -61,8 +74,8 @@ public class PieChartActivity extends AppCompatActivity {
 
 
     }
-//De code hieronder zorgt ervoor dat als er op de backbutton van de telefoon wordt geklikt de app je gelijk meeneemt naar de mainactivity. Er zat namelijk een bug in dat hij een lege "Grafisch Overzicht" activity liet zien.
-    public void onBackPressed() {
+//Als er op de terugknop gedrukt wordt op de mobiel zelf zorgt deze functie hieronder ervoor dat hij teruggaat naar de mainactivity
+   public void onBackPressed() {
         Intent startMain = new Intent(PieChartActivity.this, MainActivity.class);
         startMain.addCategory(Intent.CATEGORY_HOME);
         startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -72,31 +85,32 @@ public class PieChartActivity extends AppCompatActivity {
 
 
 
-
+// De functie hieronder zorgt ervoor dat de juiste data uit de database gehaald wordt, oftewel alle cijfers die hoger zijn dan een 5.5
     private void setData(int aantal) {
-        //where clausule
+        //Creer een selectie waar van alle data waar het cijfer hoger is dan 5.5
         String selection = DatabaseInfo.CourseColumn.GRADE + ">= 5.5";
         DatabaseHelper dbHelper = DatabaseHelper.getHelper(this);
         Cursor rs = dbHelper.query(DatabaseInfo.CourseTables.COURSE, projection, selection, null, null, null, null);
-        //skip lege elementen die misschien eerst staan.
+
         rs.moveToFirst();
         if (rs.getCount() == 0) {
-            //doe niks als er geen database is
+            //Als er geen database is hoeft hij niks te doen..
         } else {
-            //gooi  het in een loop en lees ze stuk voor stk uit
+            //maak een loop en ga alle elementen langs
             for (int a = 0; a < rs.getCount(); a++) {
                 String vak = (String) rs.getString(rs.getColumnIndex(TAG_VAK));
                 int ects = (Integer) rs.getInt(rs.getColumnIndex(TAG_ECTS));
                 double grade = (Double) rs.getDouble(rs.getColumnIndex(TAG_GRADE));
                 int period = (Integer) rs.getInt(rs.getColumnIndex(TAG_PERIOD));
-                //ga naar de volgende in de rij.
+                //ga naar volgende
                 rs.moveToNext();
+                //tel de ects op bij de studiepunten
                 this.studiepunten += ects;
             }
 
 
         }
-        //studiepunten = aantal;
+        // maak twee arraylists. Eentje met de waarde van de behaalde ects en eentje van de resterende ects
         ArrayList<Entry> yValues = new ArrayList<>();
         ArrayList<String> xValues = new ArrayList<>();
 
@@ -106,7 +120,7 @@ public class PieChartActivity extends AppCompatActivity {
         yValues.add(new Entry(240 - studiepunten, 1));
         xValues.add("Resterende ECTS");
 
-        //  http://www.materialui.co/colors
+        //  Pas de kleuren aan, aan het aantal studiepunten
         ArrayList<Integer> colors = new ArrayList<>();
         if (studiepunten < 60) {
             colors.add(Color.rgb(255, 0, 0));
@@ -120,12 +134,14 @@ public class PieChartActivity extends AppCompatActivity {
         colors.add(Color.rgb(200, 200, 200));
 
         PieDataSet dataSet = new PieDataSet(yValues, "ECTS");
+        dataSet.setValueTextSize(10f);
         dataSet.setColors(colors);
 
         PieData data = new PieData(xValues, dataSet);
-        mChart.setData(data); // bind dataset aan chart.
-        mChart.invalidate();  // Aanroepen van een redraw
-        Log.d("aantal =", "" + studiepunten);
+        // koppel de chart aan de dataset
+        mChart.setData(data);
+        mChart.invalidate();
+
     }
 }
 

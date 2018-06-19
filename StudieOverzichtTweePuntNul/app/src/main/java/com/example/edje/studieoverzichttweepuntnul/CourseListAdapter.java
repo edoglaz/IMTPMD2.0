@@ -37,7 +37,7 @@ public class CourseListAdapter extends ArrayAdapter<CourseModel> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
-
+        // Als de view leeg is vul hem dan met elementen uit de layout: view_content_row
         if (convertView == null ) {
             vh = new ViewHolder();
             LayoutInflater li = LayoutInflater.from(getContext());
@@ -53,25 +53,31 @@ public class CourseListAdapter extends ArrayAdapter<CourseModel> {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        //double selection = DatabaseInfo.CourseColumn.GRADE;
+
 
 
         CourseModel cm = getItem(position);
+        // haal het cijfer uit het CourseModel
+
         String grade1 = cm.getGrade();
+
         double grade2 = Double.parseDouble(grade1);
+        // als het cijfer hoger of gelijk is aan 5.5 dan is het vak behaald en wordt de achtegrond van het listview item lichtgroen.
         if(grade2 >= 5.5)
         {
             convertView.setBackgroundColor(Color.parseColor("#C8E6C9"));
         }
+        // als er voor het vak een onvoldoende staat(dus een cijfer van onder de 5.5) dan wordt de achtergrond lichtrood gemaakt.
         else{
             convertView.setBackgroundColor(Color.parseColor("#FFCCBC"));
         }
+        // zet de teksten met tekst uit het CourseModel
         vh.NAME.setText(""+(CharSequence) cm.getName());
         vh.ECTS.setText("Aantal Ects:"+(CharSequence) cm.getEcts());
         vh.GRADE.setText("Cijfer:"+(CharSequence) cm.getGrade());
         vh.PERIOD.setText("Periode:"+(CharSequence) cm.getPeriod());
         vh.CODE.setText(""+(CharSequence) cm.getCode());
-        //vh.STUDIEJAAR.setText("Studiejaar:"+(CharSequence) cm.getStudiejaar());
+
 
         return convertView;
     }

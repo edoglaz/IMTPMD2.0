@@ -21,63 +21,75 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="25dp"
 
-        android:layout_marginTop="74dp"
-        android:text="Pas hieronder je cijfer aan" />
+        android:layout_marginTop="77dp"
+
+        android:text="Pas hieronder je cijfer aan"
+        android:textSize="16dp" />
 
     <EditText
         android:id="@+id/cijferaanpassen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:inputType="numberDecimal"
-        android:layout_marginTop="113dp"
-        android:ems="10"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginTop="112dp"
         android:ellipsize="end"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:fontFamily="roboto"
 
-        android:text="" />
+        android:text=""
+        android:textSize="14dp" />
 
     <Button
         android:id="@+id/opslaan"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_alignTop="@+id/annuleren"
-
+        android:textSize="14dp"
         android:layout_centerHorizontal="true"
-        android:background="#26c6da"
+        android:background="#009688"
         android:onClick="opslaan"
+        android:fontFamily="roboto"
+        android:textColor="#FFFFFF"
         android:text="opslaan" />
 
     <Button
         android:id="@+id/annuleren"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
+        android:layout_height="36dp"
+        android:fontFamily="roboto"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignStart="@+id/textView2"
         android:layout_marginBottom="239dp"
-        android:background="#26c6da"
+
+        android:background="#B2DFDB"
         android:onClick="annuleren"
-        android:text="annuleren" />
+        android:text="annuleren"
+        android:textSize="14dp" />
 
     <EditText
         android:id="@+id/notitie"
         android:layout_width="337dp"
         android:layout_height="63dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="199dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/textView3"
         android:ems="10"
+        android:textSize="14dp"
+        android:fontFamily="roboto"
         android:inputType="textMultiLine" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="190dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView2"
         android:layout_marginTop="172dp"
+        android:fontFamily="roboto"
         android:text="Voeg hier eventueel een notitie toe" />
 </RelativeLayout>

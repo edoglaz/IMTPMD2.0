@@ -28,23 +28,26 @@ import com.example.edje.studieoverzichttweepuntnul.Database.DatabaseHelper;
  * Created by Edo on 14-6-2018.
  */
 public class CijferAanpassen extends AppCompatActivity {
-    //tags voor de data
-    //database data
+
+
     String[] projection = {DatabaseInfo.CourseColumn.NAME, DatabaseInfo.CourseColumn.ECTS, DatabaseInfo.CourseColumn.GRADE, DatabaseInfo.CourseColumn.PERIOD};
-    String TAG_VAK = "name";
-    String TAG_ECTS = "ects";
-    String TAG_GRADE = "grade";
-    String TAG_PERIOD = "period";
-    String TAG_NOTITIE = "notitie";
-    //String WHERE = name = "name" ;
+    String LABEL_VAK = "name";
+    String LABEL_CODE = "code";
+    String LABEL_ECTS = "ects";
+    String LABEL_GRADE = "grade";
+    String LABEL_PERIOD = "period";
+    String LABEL_STUDIEJAAR = "studiejaar";
+    String LABEL_NOTITIE = "notitie";
+
     private CourseListAdapter mAdapter;
     Button opslaan;
     Button annuleren;
-    //data van item
+
     private String name;
     private int ect;
     private int period;
     private double grade;
+    private String code;
     private String note;
     private String titel;
     private Cursor rs=null;
@@ -53,106 +56,79 @@ public class CijferAanpassen extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cijfer_aanpassen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar5);
 
 
-       // Button opslaan = (Button) this.findViewById(R.id.opslaan);
-        //Button annuleren = (Button) this.findViewById(R.id.opslaan);
-
-        //krijg de data
+        // haal labelgegevens via een bundel uit de vorige klasse
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
         {
-            name = bundle.getString(TAG_VAK);
-            ect = bundle.getInt(TAG_ECTS);
-            period = bundle.getInt(TAG_PERIOD);
-            grade = bundle.getDouble(TAG_GRADE);
-            note = bundle.getString(TAG_NOTITIE);
-            //titel = bundle.getString("titel");
-        }
+            name = bundle.getString(LABEL_VAK);
+            code = bundle.getString(LABEL_CODE);
+            ect = bundle.getInt(LABEL_ECTS);
+            period = bundle.getInt(LABEL_PERIOD);
+            grade = bundle.getDouble(LABEL_GRADE);
+            note = bundle.getString(LABEL_NOTITIE);
 
+
+        }
+        // zet de titel als de code uit de vorige klasse
+        toolbar.setTitle(code);
+        // haal de notitie uit de vorige klasse
         String note1= String.valueOf(note);
-        //toolbar.setTitle(name);
+        // als de notitie geen data bevat vul de edittext dan met een standaard tekst
         if(note1.equals("null")) {
             TextView notitietekst = (TextView) findViewById(R.id.notitie);
             notitietekst.setHint("Schrijf hier uw notitie:");
         }
+        // als de notitie wel gevuld is laat deze dan zien
         else{
             TextView notitietekst = (TextView) findViewById(R.id.notitie);
             notitietekst.setText(String.valueOf(note));
         }
         TextView vakgrade = (TextView) findViewById(R.id.cijferaanpassen);
+        //zet de tekst van het cijfer
         vakgrade.setText(String.valueOf(grade));
-/*
-        opslaan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveData();
-                Intent intent = new Intent();
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                setResult(RESULT_OK, intent);
 
-                onBackPressed();
-            }
-        });
-
-        annuleren.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                setResult(RESULT_OK, intent);
-
-                onBackPressed();
-
-            }
-        });
-
-/*
-
- */
     }
 
 
     public void annuleren(View v)
     {
-        //ga terug naar invoer.
-        //Intent i = new Intent(getApplicationContext(), CourseListActivity.class);
-        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //i.putExtra("titel",titel);
-        //startActivity(i);
 
+        // als er op de knop met Annuleren gedruk wordt wordt deze klasse gesloten en gaat hij terug naar de vorige
         finish();
     }
     public void opslaan(View v)
     {
         //zorg dat de data opgeslagen wordt
         saveData();
+        // maak een intent die gaat naar de mainactivity
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        //i.putExtra("titel",titel);
-        //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        String toast = "Je data is opgeslagen!";
+        // laat een toast zien met de teskt dat de gegevens zijn opgeslagen
+
         Toast.makeText(getApplicationContext(), "Je data is opgeslagen!",
                 Toast.LENGTH_LONG).show();
+        //start de activity
         startActivity(i);
 
         finish();
     }
-/*
 
- */
 
     public void saveData() {
+
         DatabaseHelper dbHelper = DatabaseHelper.getHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        //store values en schrijf weg ind e database
+
+
         EditText cijfer = (EditText) findViewById(R.id.cijferaanpassen);
         EditText notitie = (EditText) findViewById(R.id.notitie);
         cijfer.setSelection(cijfer.getText().length());
         double nieuwecijfer = Double.parseDouble(cijfer.getText().toString());
         String notitie1 = notitie.getText().toString();
 
-        //name hoeft eigenlijk niet meegegeven te worden
+        //vul de database met de nieuwe gegevens die net zijn ingevoerd
         ContentValues values = new ContentValues();
         values.put(DatabaseInfo.CourseColumn.NAME, name);
         values.put(DatabaseInfo.CourseColumn.ECTS, ect);
@@ -161,9 +137,9 @@ public class CijferAanpassen extends AppCompatActivity {
         values.put(DatabaseInfo.CourseColumn.NOTITIE, notitie1);
 
 
-        //update de tabel waar name gelijk is aan de name in de tabelnaam
-        String[] args = {name};
 
+        String[] args = {name};
+        // update de database waar de CourseColumn naam hetzelfde is als de naam van de klasse waar hij zich nu in bevindt
         db.update(DatabaseInfo.CourseTables.COURSE, values, DatabaseInfo.CourseColumn.NAME + "=?", args);
 
 

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    android:background="#009688"
     tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -22,8 +22,8 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
         android:id="@+id/listView"
-        android:background="@color/colorAccent"
-        android:divider="#64B5F6"
+        android:background="#FFFFFF"
+        android:divider="#00796B"
         android:dividerHeight="4px"
         android:layout_marginTop="0dp"
         android:layout_centerHorizontal="true" />

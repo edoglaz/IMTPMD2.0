@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 2000;
+    private static int SPLASH_TIME_OUT = 1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +23,13 @@ public class SplashScreen extends AppCompatActivity {
 
             @Override
             public void run() {
-                // This method will be executed once the timer is over
-                // MainActivity class will be started
+                // na de delay moet er een intent gestart worden die navigeert naar de MainActivity
                 Intent i = new Intent(SplashScreen.this, MainActivity.class);
                 startActivity(i);
 
-                // close this activity
+                // sluit deze activity
                 finish();
             }
-        }, SPLASH_TIME_OUT);
+        }, SPLASH_TIME_OUT); // na 2 seconde moet het splashscreen weer sluiten
     }
 }
